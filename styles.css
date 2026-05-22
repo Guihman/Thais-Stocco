@@ -520,16 +520,24 @@ h1 {
 }
 
 .marquee {
+  position: relative;
   display: flex;
+  width: 100%;
   overflow: hidden;
   user-select: none;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
 .marquee-track {
   display: flex;
+  width: max-content;
   min-width: max-content;
+  flex-shrink: 0;
   gap: 18px;
-  animation: marquee 26s linear infinite;
+  padding-inline: 18px;
+  animation: marquee 58s linear infinite;
+  will-change: transform;
 }
 
 .marquee span {
@@ -999,7 +1007,13 @@ h1 {
 }
 
 @keyframes marquee {
-  to { transform: translateX(-50%); }
+  from { 
+    transform: translate3d(0, 0, 0); 
+  }
+
+  to { 
+    transform: translate3d(-33.333%, 0, 0); 
+  }
 }
 
 @keyframes mapMove {
@@ -1047,6 +1061,26 @@ h1 {
   .site-header {
     top: 10px;
     width: calc(100% - 20px);
+      .marquee-section {
+    padding: 14px 0;
+  }
+
+  .marquee {
+    mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  }
+
+  .marquee-track {
+    gap: 12px;
+    padding-inline: 12px;
+    animation-duration: 44s;
+  }
+
+  .marquee span {
+    padding: 11px 15px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
   }
 
   .menu-toggle {
