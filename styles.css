@@ -1345,7 +1345,7 @@ h1 {
 
 @media (max-width: 760px) {
   .marquee-track {
-    animation-duration: 14s !important;
+    animation-duration: 20s !important;
   }
 }
 
