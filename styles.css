@@ -500,6 +500,7 @@ h1 {
 }
 
 .mini-card {
+  padding: 10px;
   position: absolute;
   z-index: 2;
   border: 1px solid var(--stroke);
