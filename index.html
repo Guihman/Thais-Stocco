@@ -43,6 +43,7 @@
     <nav class="nav-links" aria-label="Menu principal">
       <a href="#sobre">Sobre</a>
       <a href="#atendimento">Atendimento</a>
+      <a href="#quiz">Quiz</a>
       <a href="#localizacao">Localização</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -114,27 +115,28 @@
 
 <section class="section marquee-section" aria-label="Temas de atendimento">
   <div class="marquee">
-    <div class="marquee-track" aria-hidden="true">
-      <span>Ansiedade</span>
-      <span>Autoconhecimento</span>
-      <span>Relacionamentos</span>
-      <span>Autoestima</span>
-      <span>Transições de vida</span>
-      <span>Saúde emocional</span>
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span>Ansiedade</span>
+        <span>Autoconhecimento</span>
+        <span>Relacionamentos</span>
+        <span>Autoestima</span>
+        <span>Transições de vida</span>
+        <span>Saúde emocional</span>
+        <span>Escuta acolhedora</span>
+        <span>Processo terapêutico</span>
+      </div>
 
-      <span>Ansiedade</span>
-      <span>Autoconhecimento</span>
-      <span>Relacionamentos</span>
-      <span>Autoestima</span>
-      <span>Transições de vida</span>
-      <span>Saúde emocional</span>
-
-      <span>Ansiedade</span>
-      <span>Autoconhecimento</span>
-      <span>Relacionamentos</span>
-      <span>Autoestima</span>
-      <span>Transições de vida</span>
-      <span>Saúde emocional</span>
+      <div class="marquee-group" aria-hidden="true">
+        <span>Ansiedade</span>
+        <span>Autoconhecimento</span>
+        <span>Relacionamentos</span>
+        <span>Autoestima</span>
+        <span>Transições de vida</span>
+        <span>Saúde emocional</span>
+        <span>Escuta acolhedora</span>
+        <span>Processo terapêutico</span>
+      </div>
     </div>
   </div>
 </section>
@@ -236,6 +238,64 @@
         </div>
       </div>
     </section>
+
+<section class="section quiz-section" id="quiz">
+  <div class="section-heading reveal">
+    <span class="section-kicker">Quiz rápido</span>
+    <h2>Descubra como iniciar esse cuidado com mais clareza.</h2><br>
+    <p>
+      Este quiz não é diagnóstico. Ele serve apenas para te ajudar a organizar o que você busca
+      e enviar uma mensagem mais completa pelo WhatsApp.
+    </p>
+  </div>
+
+  <div class="quiz-card reveal" aria-live="polite">
+    <div class="quiz-topbar">
+      <span data-quiz-step-label>Etapa 1 de 5</span>
+      <div class="quiz-progressbar" aria-hidden="true">
+        <i data-quiz-bar></i>
+      </div>
+    </div>
+
+    <div class="quiz-question" data-quiz-question>
+      <p class="quiz-overline">Escolha uma opção</p>
+      <h3></h3>
+      <div class="quiz-options" data-quiz-options></div>
+    </div>
+
+    <div class="quiz-actions" data-quiz-actions>
+      <button class="quiz-back" type="button" data-quiz-back>Voltar</button>
+      <button class="quiz-next" type="button" data-quiz-next disabled>Continuar</button>
+    </div>
+
+    <div class="quiz-result" data-quiz-result hidden>
+      <span class="quiz-result-badge">Pronto</span>
+      <h3>Seu primeiro contato já pode ser mais claro.</h3>
+      <p>
+        Com base nas suas respostas, montamos uma mensagem pronta para você enviar à Thais.
+      </p>
+
+      <div class="quiz-summary" data-quiz-summary></div>
+
+      <div class="quiz-result-actions">
+        <a 
+          class="btn btn-primary magnetic" 
+          data-quiz-whatsapp 
+          href="https://wa.me/5518991692290" 
+          target="_blank" 
+          rel="noopener"
+        >
+          Enviar pelo WhatsApp
+          <span>↗</span>
+        </a>
+
+        <button class="btn btn-secondary" type="button" data-quiz-restart>
+          Refazer quiz
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="section location" id="localizacao">
       <div class="location-card reveal">

@@ -188,3 +188,212 @@ window.addEventListener("resize", () => {
   setupCanvas();
   drawAurora();
 });
+/* Quiz rápido: perguntas, progresso, resultado e WhatsApp personalizado */
+(() => {
+  const quizQuestions = [
+    {
+      label: "Motivo principal",
+      question: "O que mais te fez pensar em iniciar terapia agora?",
+      options: [
+        "Quero entender melhor minhas emoções",
+        "Tenho me sentido sobrecarregada(o)",
+        "Quero cuidar dos meus relacionamentos",
+        "Busco autoconhecimento e amadurecimento"
+      ]
+    },
+    {
+      label: "Momento atual",
+      question: "Qual frase combina mais com o seu momento?",
+      options: [
+        "Estou pronta(o) para começar",
+        "Tenho vontade, mas ainda tenho dúvidas",
+        "Quero conversar antes de decidir",
+        "Preciso organizar melhor minha rotina"
+      ]
+    },
+    {
+      label: "Formato",
+      question: "Qual formato parece melhor para você?",
+      options: [
+        "Atendimento presencial",
+        "Atendimento online",
+        "Tanto faz, quero ver disponibilidade",
+        "Ainda não sei qual formato escolher"
+      ]
+    },
+    {
+      label: "Horário",
+      question: "Qual período costuma funcionar melhor?",
+      options: [
+        "Manhã",
+        "Tarde",
+        "Noite",
+        "Tenho flexibilidade"
+      ]
+    },
+    {
+      label: "Primeiro contato",
+      question: "Como você gostaria que fosse esse primeiro contato?",
+      options: [
+        "Quero tirar dúvidas com calma",
+        "Quero verificar valores e horários",
+        "Quero saber como funciona a primeira sessão",
+        "Quero agendar assim que possível"
+      ]
+    }
+  ];
+
+  const quizPrefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const quizCard = document.querySelector(".quiz-card");
+  const quizQuestion = document.querySelector("[data-quiz-question]");
+  const quizQuestionTitle = quizQuestion?.querySelector("h3");
+  const quizOverline = quizQuestion?.querySelector(".quiz-overline");
+  const quizOptions = document.querySelector("[data-quiz-options]");
+  const quizBack = document.querySelector("[data-quiz-back]");
+  const quizNext = document.querySelector("[data-quiz-next]");
+  const quizStepLabel = document.querySelector("[data-quiz-step-label]");
+  const quizBar = document.querySelector("[data-quiz-bar]");
+  const quizResult = document.querySelector("[data-quiz-result]");
+  const quizSummary = document.querySelector("[data-quiz-summary]");
+  const quizWhatsapp = document.querySelector("[data-quiz-whatsapp]");
+  const quizRestart = document.querySelector("[data-quiz-restart]");
+  const quizActions = document.querySelector("[data-quiz-actions]");
+
+  let quizStep = 0;
+  const quizAnswers = [];
+
+  function renderQuizStep() {
+    if (!quizCard || !quizQuestion || !quizOptions || !quizQuestionTitle || !quizOverline) return;
+
+    const current = quizQuestions[quizStep];
+
+    quizQuestion.hidden = false;
+
+    if (quizResult) quizResult.hidden = true;
+    if (quizActions) quizActions.hidden = false;
+    if (quizBack) quizBack.hidden = false;
+    if (quizNext) quizNext.hidden = false;
+
+    quizQuestionTitle.textContent = current.question;
+    quizOverline.textContent = current.label;
+    quizOptions.innerHTML = "";
+
+    current.options.forEach((option) => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "quiz-option";
+      button.textContent = option;
+      button.setAttribute("aria-pressed", quizAnswers[quizStep] === option ? "true" : "false");
+
+      if (quizAnswers[quizStep] === option) {
+        button.classList.add("is-selected");
+      }
+
+      button.addEventListener("click", () => {
+        quizAnswers[quizStep] = option;
+
+        quizOptions.querySelectorAll(".quiz-option").forEach((other) => {
+          other.classList.remove("is-selected");
+          other.setAttribute("aria-pressed", "false");
+        });
+
+        button.classList.add("is-selected");
+        button.setAttribute("aria-pressed", "true");
+
+        if (quizNext) {
+          quizNext.disabled = false;
+        }
+      });
+
+      quizOptions.appendChild(button);
+    });
+
+    if (quizStepLabel) {
+      quizStepLabel.textContent = `Etapa ${quizStep + 1} de ${quizQuestions.length}`;
+    }
+
+    if (quizBar) {
+      quizBar.style.width = `${((quizStep + 1) / quizQuestions.length) * 100}%`;
+    }
+
+    if (quizBack) {
+      quizBack.disabled = quizStep === 0;
+    }
+
+    if (quizNext) {
+      quizNext.textContent = quizStep === quizQuestions.length - 1 ? "Ver resultado" : "Continuar";
+      quizNext.disabled = !quizAnswers[quizStep];
+    }
+  }
+
+  function showQuizResult() {
+    if (!quizQuestion || !quizResult || !quizSummary || !quizWhatsapp || !quizStepLabel || !quizBar) return;
+
+    quizQuestion.hidden = true;
+    quizResult.hidden = false;
+
+    if (quizActions) {
+      quizActions.hidden = true;
+    }
+
+    quizStepLabel.textContent = "Quiz concluído";
+    quizBar.style.width = "100%";
+
+    quizSummary.innerHTML = quizQuestions
+      .map((item, index) => `<p><strong>${item.label}:</strong> ${quizAnswers[index]}</p>`)
+      .join("");
+
+    const messageLines = [
+      "Olá, Thais! Vim pelo seu site e respondi ao quiz rápido.",
+      "Gostaria de saber mais sobre o atendimento.",
+      "",
+      ...quizQuestions.map((item, index) => `${item.label}: ${quizAnswers[index]}`)
+    ];
+
+    quizWhatsapp.href = `https://wa.me/5518991692290?text=${encodeURIComponent(messageLines.join("\n"))}`;
+  }
+
+  if (quizCard && quizNext && quizBack) {
+    renderQuizStep();
+
+    quizNext.addEventListener("click", () => {
+      if (!quizAnswers[quizStep]) return;
+
+      if (quizStep < quizQuestions.length - 1) {
+        quizStep += 1;
+        renderQuizStep();
+
+        quizCard.scrollIntoView({
+          behavior: quizPrefersReducedMotion ? "auto" : "smooth",
+          block: "center"
+        });
+
+        return;
+      }
+
+      showQuizResult();
+
+      quizCard.scrollIntoView({
+        behavior: quizPrefersReducedMotion ? "auto" : "smooth",
+        block: "center"
+      });
+    });
+
+    quizBack.addEventListener("click", () => {
+      if (quizStep === 0) return;
+
+      quizStep -= 1;
+      renderQuizStep();
+    });
+  }
+
+  if (quizRestart) {
+    quizRestart.addEventListener("click", () => {
+      quizStep = 0;
+      quizAnswers.length = 0;
+      renderQuizStep();
+    });
+  }
+})();
