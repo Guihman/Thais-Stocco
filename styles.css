@@ -1335,17 +1335,16 @@ h1 {
     transition-duration: 0.001ms !important;
   }
 
-  /* Mantém o carrossel ativo mesmo se algum CSS global tentar cortar animações */
 .marquee-track {
   animation-name: marqueeMoveFixed !important;
-  animation-duration: 18s !important;
+  animation-duration: 38s !important;
   animation-timing-function: linear !important;
   animation-iteration-count: infinite !important;
 }
 
 @media (max-width: 760px) {
   .marquee-track {
-    animation-duration: 20s !important;
+    animation-duration: 34s !important;
   }
 }
 
@@ -1938,7 +1937,7 @@ h1 {
   }
 
   .marquee-track {
-    animation-duration: 14s !important;
+    animation-duration: 34s !important;
   }
 
   .marquee-group {
@@ -1951,4 +1950,26 @@ h1 {
     padding: 10px 16px;
     font-size: 0.95rem;
   }
+}
+
+a,
+button,
+[role="button"],
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus,
+button:focus,
+[role="button"]:focus {
+  outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid rgba(185, 255, 224, 0.8);
+  outline-offset: 4px;
 }
