@@ -397,3 +397,64 @@ window.addEventListener("resize", () => {
     });
   }
 })();
+/* Carrosséis da seção do grupo terapêutico */
+(() => {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function setupHorizontalCarousel({ carouselSelector, previousSelector, nextSelector, itemSelector }) {
+    const carousel = document.querySelector(carouselSelector);
+    const previousButton = document.querySelector(previousSelector);
+    const nextButton = document.querySelector(nextSelector);
+
+    if (!carousel || !previousButton || !nextButton) return;
+
+    function getScrollAmount() {
+      const card = carousel.querySelector(itemSelector);
+      if (!card) return 320;
+
+      const styles = window.getComputedStyle(carousel);
+      const gap = Number.parseFloat(styles.columnGap || styles.gap) || 18;
+
+      return card.getBoundingClientRect().width + gap;
+    }
+
+    function updateButtons() {
+      const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth - 2;
+
+      previousButton.disabled = carousel.scrollLeft <= 2;
+      nextButton.disabled = carousel.scrollLeft >= maxScrollLeft;
+    }
+
+    previousButton.addEventListener("click", () => {
+      carousel.scrollBy({
+        left: -getScrollAmount(),
+        behavior: prefersReducedMotion ? "auto" : "smooth"
+      });
+    });
+
+    nextButton.addEventListener("click", () => {
+      carousel.scrollBy({
+        left: getScrollAmount(),
+        behavior: prefersReducedMotion ? "auto" : "smooth"
+      });
+    });
+
+    carousel.addEventListener("scroll", updateButtons, { passive: true });
+    window.addEventListener("resize", updateButtons);
+    updateButtons();
+  }
+
+  setupHorizontalCarousel({
+    carouselSelector: "[data-media-carousel]",
+    previousSelector: "[data-media-prev]",
+    nextSelector: "[data-media-next]",
+    itemSelector: ".official-card-shot"
+  });
+
+  setupHorizontalCarousel({
+    carouselSelector: "[data-group-carousel]",
+    previousSelector: "[data-group-prev]",
+    nextSelector: "[data-group-next]",
+    itemSelector: ".program-card"
+  });
+})();
