@@ -445,13 +445,6 @@ window.addEventListener("resize", () => {
   }
 
   setupHorizontalCarousel({
-    carouselSelector: "[data-media-carousel]",
-    previousSelector: "[data-media-prev]",
-    nextSelector: "[data-media-next]",
-    itemSelector: ".official-card-shot"
-  });
-
-  setupHorizontalCarousel({
     carouselSelector: "[data-group-carousel]",
     previousSelector: "[data-group-prev]",
     nextSelector: "[data-group-next]",
