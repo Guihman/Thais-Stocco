@@ -2676,3 +2676,34 @@ button:focus-visible,
     justify-content: center;
   }
 }
+
+
+.premium-ad{
+max-width:820px;
+margin:80px auto;
+padding:0 24px;
+}
+.premium-ad-label{
+font-size:.72rem;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:#9a9a9a;
+margin:0 0 10px 8px;
+}
+.premium-ad ins{
+display:block;
+background:#faf8f6;
+border:1px solid rgba(0,0,0,.05);
+border-radius:22px;
+padding:8px;
+box-shadow:0 8px 30px rgba(0,0,0,.04);
+min-height:120px;
+transition:.25s;
+}
+.premium-ad:hover ins{
+box-shadow:0 12px 40px rgba(0,0,0,.07);
+transform:translateY(-2px);
+}
+@media(max-width:768px){
+.premium-ad{margin:56px auto;}
+}
